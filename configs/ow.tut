@@ -1,0 +1,42 @@
+{
+ "name":"Openwager loging tutorial",
+ "steps":[
+  {
+   "name":"step1",
+   "desc":"Go to page",
+   "type":"url",
+   "data":"http://dev01.openwager.com:8080/owp"
+  },
+  {
+   "name":"uname",
+   "desc":"Entering username",
+   "type":"text_input",
+   "data":{
+     "locator":"#pw",
+     "value":"secret"
+   }
+  },
+  {
+   "name":"pass",
+   "desc":"Entering password",
+   "type":"text_input",
+   "data":{
+     "locator":"#un",
+     "value":"admin"
+   }
+  },
+  {
+   "name":"press enter",
+   "desc":"Press login",
+   "type":"button_press",
+   "data":{
+    "locator":".submit btn btn-primary"
+   }
+  }
+ ],
+ "metadata":{
+   "default_wait":1000,
+   "highlight_element":true,
+   "highlight_time":500 
+ }
+}
