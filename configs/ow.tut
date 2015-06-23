@@ -5,16 +5,7 @@
    "name":"step1",
    "desc":"Go to page",
    "type":"url",
-   "data":"http://dev01.openwager.com:8080/owp"
-  },
-  {
-   "name":"uname",
-   "desc":"Entering username",
-   "type":"text_input",
-   "data":{
-     "locator":"#pw",
-     "value":"secret"
-   }
+   "data":"http://dev01.owpdev.com:8080/owp"
   },
   {
    "name":"pass",
@@ -26,11 +17,20 @@
    }
   },
   {
+   "name":"uname",
+   "desc":"Entering username",
+   "type":"text_input",
+   "data":{
+     "locator":"#pw",
+     "value":"secret"
+   }
+  },
+  {
    "name":"press enter",
    "desc":"Press login",
    "type":"button_press",
    "data":{
-    "locator":".submit btn btn-primary"
+    "locator":".submit"
    }
   }
  ],
