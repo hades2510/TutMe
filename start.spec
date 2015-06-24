@@ -6,6 +6,7 @@ a = Analysis(['start.py'],
              runtime_hooks=None)
 #cef_simple_app=Tree('./cefsimple.app', 'cefsimple.app')
 libs_path=Tree('./libs', 'libs')
+configs_path=Tree('./configs','configs')
 
 pyz = PYZ(a.pure)
 exe = EXE(pyz,
@@ -13,6 +14,7 @@ exe = EXE(pyz,
           a.binaries,
 	  #cef_simple_app,
           libs_path,
+		  configs_path,
           a.zipfiles,
           a.datas,
           name='start',
