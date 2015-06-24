@@ -75,6 +75,6 @@ def run_tut(steps, config):
 
         time.sleep(wait_in_mili/1000.0)            
 
-tut_config = json.load( open("configs/ow.tut") )
+tut_config = json.load( open( os.path.join(basedir,"configs/ow.tut") ) ) 
 
 run_tut(tut_config["steps"], tut_config["metadata"])
