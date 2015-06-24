@@ -4,6 +4,7 @@ import codecs
 import time
 import json
 import pprint
+import platform
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -12,6 +13,18 @@ if getattr(sys, 'frozen', False):
     basedir = sys._MEIPASS
 else:
     basedir = '.'
+	
+def get_cef_location():
+	if platform.system() == "Windows":
+		return os.path.join(basedir, "libs/win/cefsimple")
+	else:
+		return os.path.join(basedir, os.path.join('libs','cefsimple.app/Contents/MacOS/cefsimple'))
+		
+def get_chrome_driver_location():
+	if platform.system() == "Windows":
+		return os.path.join(basedir, "libs/win/chromedriver")
+	else:
+		return os.path.join(basedir, os.path.join('libs','chromedriver'))
 
 def find_elem(browser, locator):
     
@@ -27,10 +40,10 @@ def run_tut(steps, config):
     wait_in_mili = tut_config["metadata"]["default_wait"]
     highlight_elem = tut_config["metadata"]
 
-    chrome_driver_path = os.path.join(basedir,os.path.join('libs','chromedriver'))
+    chrome_driver_path = get_chrome_driver_location()
 
     c_o = Options()
-    c_o.binary_location = os.path.join(basedir,os.path.join('libs',"cefsimple.app/Contents/MacOS/cefsimple"))
+    c_o.binary_path = get_cef_location()
     
     browser = webdriver.Chrome(executable_path=chrome_driver_path,chrome_options=c_o)
 
