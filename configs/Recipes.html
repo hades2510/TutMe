@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title>Choose a recipe</title>
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript">
+            var recipe_choosen = false;
+            
+            function make_recipe(path)
+            {
+                //only one recipe at a time
+                if( recipe_choosen == true )
+                {
+                    return;
+                }
+                
+                recipe_choosen = true;
+                
+                var choice = $('<input type="hidden" value="'+path+'" id="make_recipe"></input>')
+                $( "body" ).append(choice);
+            }
+        </script>
+	</head>
+	
+	<body>
+		<h1>
+			Available recipes
+		</h1>
+		
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                 <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#owrecipe" aria-expanded="true" aria-controls="owrecipe">
+                          Openwager portal login
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="owrecipe" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                        <div>Use this recipe to log in into the OWPortal</div>
+                        <div class="btn btn-primary" onclick="make_recipe('configs/ow.tut')">Use</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                      <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#androidApp" aria-expanded="false" aria-controls="androidApp">
+                          Android app create
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="androidApp" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                      <div class="panel-body">
+                        <div>Create an android app</div>
+                        <div class="btn btn-primary" onclick="make_recipe('configs/android.tut')">Use</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                      <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#iosAppCheck" aria-expanded="false" aria-controls="iosAppCheck">
+                          iOS app check status
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="iosAppCheck" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                      <div class="panel-body">
+                            <div>Check iOS app status</div>
+                            <div class="btn btn-primary" onclick="make_recipe('configs/ios.tut')">Use</div>
+                      </div>
+                    </div>
+                  </div>
+		</div>
+	</body>
+</html>
