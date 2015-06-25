@@ -52,9 +52,9 @@ def open_browser(url):
     
     tut_config = json.load( open( os.path.join(basedir, elem.get_attribute("value") ) ) )
     
-    run_tut(browser, tut_config["steps"], tut_config["metadata"])
+    run_tut(browser, tut_config["steps"], tut_config["metadata"], tut_config["input"])
 	
-def run_tut(browser, steps, config):
+def run_tut(browser, steps, config, inputs=None):
     
     wait_in_mili = config["default_wait"]
     highlight_elem = config

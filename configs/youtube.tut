@@ -1,5 +1,11 @@
 {
  "name":"Youtube search",
+ "input":[
+    {
+     "var_name":"query",
+     "type":"string"
+    }
+ ],
  "steps":[
   {
    "name":"open_page",
@@ -21,7 +27,7 @@
    "type":"text_input",
    "data":{
      "locator":"#masthead-search-term",
-     "value":"coma chip"
+     "value":"$query"
    }
   },
   {
