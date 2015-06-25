@@ -1,0 +1,49 @@
+{
+ "name":"Youtube search",
+ "steps":[
+  {
+   "name":"open_page",
+   "desc":"Go to page",
+   "type":"url",
+   "data":"http://youtube.com"
+  },
+  {
+   "name":"click_on_search_field",
+   "desc":"Click on the search bar",
+   "type":"button_pres",
+   "data":{
+     "locator":"#masthead-search-term"
+   }
+  },
+  {
+   "name":"search_query",
+   "desc":"Enter the search term",
+   "type":"text_input",
+   "data":{
+     "locator":"#masthead-search-term",
+     "value":"coma chip"
+   }
+  },
+  {
+   "name":"search_for_it",
+   "desc":"Press the search icon",
+   "type":"button_press",
+   "data":{
+    "locator":"#search-btn"
+   }
+  },
+  {
+   "name":"click_on_first_results",
+   "desc":"Press the first result",
+   "type":"button_press",
+   "data":{
+    "locator":".yt-lockup-thumbnail"
+   }
+  }
+ ],
+ "metadata":{
+   "default_wait":1000,
+   "highlight_element":true,
+   "highlight_time":500 
+ }
+}
