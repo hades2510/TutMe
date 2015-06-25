@@ -43,7 +43,7 @@ def open_browser(url):
 	
     c_o = Options()
     c_o.binary_path = get_cef_location()
-    
+        
     browser = webdriver.Chrome(executable_path=chrome_driver_path,chrome_options=c_o)
     browser.get(url)
     
@@ -87,4 +87,4 @@ def run_tut(browser, steps, config):
 
         time.sleep(wait_in_mili/1000.0)
 
-open_browser(os.path.abspath(os.path.join(basedir,"configs/Recipes.html")))
+open_browser("file://"+os.path.abspath(os.path.join(basedir,"configs/Recipes.html")))
