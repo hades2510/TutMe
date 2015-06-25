@@ -32,9 +32,9 @@ def get_chrome_driver_location():
 def find_elem(browser, locator):
     
     if locator.startswith("#"):
-        elem = browser.find_element_by_id(locator[1:]) 
+        elem = WebDriverWait(browser, 5).until( EC.presence_of_element_located( (By.ID, locator[1:]) ) )
     elif locator.startswith("."):            
-        elem = browser.find_element_by_class_name(locator[1:])
+        elem = WebDriverWait(browser, 5).until( EC.presence_of_element_located( (By.CLASS_NAME, locator[1:]) ) )
 
     return elem
 
