@@ -54,7 +54,8 @@ def open_browser(url):
 	
     c_o = Options()
     c_o.add_argument("--disable-web-security")
-    c_o.add_argument("--webdriver-logfile=NUL")
+    c_o.add_argument("--webdriver-logfile=%s" % get_null_file())
+    c_o.add_argument("--url=%s" % url)
     c_o.binary_location = get_cef_location()
 
     service_args = ["--log-path=%s" % get_null_file()]
