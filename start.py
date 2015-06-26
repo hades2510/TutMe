@@ -19,7 +19,7 @@ else:
 	
 def get_cef_location():
 	if platform.system() == "Windows":
-		return os.path.join(basedir, "libs/win/cefsimple")
+		return os.path.join(basedir, "libs/win/cefsimple.exe")
 	else:
 		return os.path.join(basedir, os.path.join('libs','cefsimple.app/Contents/MacOS/cefsimple'))
 		
@@ -31,23 +31,35 @@ def get_chrome_driver_location():
 
 def find_elem(browser, locator):
     
+    print "looking for elem ", locator
+            
     if locator.startswith("#"):
         elem = WebDriverWait(browser, 5).until( EC.presence_of_element_located( (By.ID, locator[1:]) ) )
     elif locator.startswith("."):            
         elem = WebDriverWait(browser, 5).until( EC.presence_of_element_located( (By.CLASS_NAME, locator[1:]) ) )
-
+    
+    print "found elem ", locator
+    
     return elem
+    
+def get_null_file():
+    
+    if platform.system() == "Windows":
+        return "NUL"
+    else:
+        return "/dev/null"
 
 def open_browser(url):
     chrome_driver_path = get_chrome_driver_location()
 	
     c_o = Options()
-    if platform.system() == "Windows":
-        co_binary_path = get_cef_location()
-    else:
-        c_o.binary_location = get_cef_location()
-        
-    browser = webdriver.Chrome(executable_path=chrome_driver_path,chrome_options=c_o)
+    c_o.add_argument("--disable-web-security")
+    c_o.add_argument("--webdriver-logfile=NUL")
+    c_o.binary_location = get_cef_location()
+
+    service_args = ["--log-path=%s" % get_null_file()]
+    
+    browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=c_o, service_args=service_args)
     browser.get(url)
     
     #wait for a recipe to be choosen
@@ -76,7 +88,7 @@ def run_tut(browser, steps, config, inputs=None):
         if step["type"] == "text_input":
 
             data = step["data"]
-
+            
             elem = find_elem(browser, step["data"]["locator"])
 
             input_data = data["value"]
