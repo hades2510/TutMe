@@ -17,7 +17,7 @@
         <script type="text/javascript">
             var recipe_choosen = false;
             
-            function make_recipe(path)
+            function make_recipe(path, prefix, list_of_inputs)
             {
                 //only one recipe at a time
                 if( recipe_choosen == true )
@@ -26,7 +26,22 @@
                 }
                 
                 recipe_choosen = true;
-                
+
+                var inputs = [];
+
+                if( prefix !== undefined && list_of_inputs !== undefined )
+                {
+                    list_of_inputs = list_of_inputs.split(',');
+                    
+                    for( input_name in list_of_inputs)
+                    {
+                        inputs["$"+list_of_inputs[input_name]] = $("#"+prefix+"_"+list_of_inputs[input_name]).val();
+                    }
+
+                    var input_html = $('<input type="hidden" value="'+JSON.stringify(inputs)+'" id="make_recipe_input"></input>');
+                    $( "body" ).append(input_html);
+                }                
+
                 var choice = $('<input type="hidden" value="'+path+'" id="make_recipe"></input>')
                 $( "body" ).append(choice);
             }
@@ -65,7 +80,11 @@
                     <div id="androidApp" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                       <div class="panel-body">
                         <div>Make a search on youtube and play the first result found</div>
-                        <div class="btn btn-primary" onclick="make_recipe('configs/youtube.tut')">Use</div>
+                        <div class="well">
+                            <h4>Enter the name of what you're looking for bellow</h4>
+                            <input type="text" id="yt_query"></input>
+                        </div>
+                        <div class="btn btn-primary" onclick="make_recipe('configs/youtube.tut','yt','query')">Use</div>
                       </div>
                     </div>
                   </div>

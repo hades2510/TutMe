@@ -52,10 +52,13 @@ def open_browser(url):
     
     #wait for a recipe to be choosen
     elem = WebDriverWait( browser, 1000 ).until( EC.presence_of_element_located( (By.ID, "make_recipe")) )
-    
-    tut_config = json.load( open( os.path.join(basedir, elem.get_attribute("value") ) ) )
+    inputs = None
+    try:
+        inputs=browser.get_element_by_id("make_recipe_input").get_attribute("value")   
+    except:
+        pass
 
-    inputs = tut_config.get("input",None)   
+    tut_config = json.load( open( os.path.join(basedir, elem.get_attribute("value") ) ) )
  
     run_tut(browser, tut_config["steps"], tut_config["metadata"], inputs)
 	
@@ -75,10 +78,17 @@ def run_tut(browser, steps, config, inputs=None):
             data = step["data"]
 
             elem = find_elem(browser, step["data"]["locator"])
+
+            input_data = data["value"]
             
-            print "feeding input ",data            
+            #maybe a var
+            if input_data.startswith('$') :
+                print "interpolating variable ",input_data
+                input_data = inputs.get(input_data, input_data)            
+ 
+            print "feeding input ", input_data            
             
-            elem.send_keys(data["value"])
+            elem.send_keys(input_data)
 
         if step["type"] == "button_press":
             
