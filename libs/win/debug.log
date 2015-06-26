@@ -1,32 +1,4 @@
-[0511/202540:ERROR:icu_util.cc(149)] Couldn't mmap C:\Workspace\tut_me\libs\icudtl.dat
-[0511/202540:FATAL:content_main_runner.cc(721)] Check failed: base::i18n::InitializeICU(). 
-[0511/202621:ERROR:icu_util.cc(149)] Couldn't mmap C:\Workspace\tut_me\libs\icudtl.dat
-[0511/202621:FATAL:content_main_runner.cc(721)] Check failed: base::i18n::InitializeICU(). 
-[0511/202638:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0511/202638:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0511/202638:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0511/202638:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0511/202638:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0511/202638:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0511/202638:ERROR:renderer_main.cc(207)] Running without renderer sandbox
-[0511/202641:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
-[0623/190220:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0623/190220:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0623/190220:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0623/190220:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0623/190220:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0623/190220:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0623/190220:ERROR:renderer_main.cc(207)] Running without renderer sandbox
-[0623/190227:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
-[0623/190227:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
-[0623/190227:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
-[0624/114850:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0624/114850:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0624/114850:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0624/114850:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0624/114850:ERROR:main_delegate.cc(571)] Could not load cef.pak
-[0624/114850:ERROR:main_delegate.cc(588)] Could not load cef_100_percent.pak
-[0624/114850:ERROR:renderer_main.cc(207)] Running without renderer sandbox
-[0624/114854:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
-[0624/114854:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
-[0624/114854:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
+[0626/134022:ERROR:renderer_main.cc(207)] Running without renderer sandbox
+[0626/134025:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
+[0626/134025:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
+[0626/134025:WARNING:message_in_transit_queue.cc(18)] Destroying nonempty message queue
