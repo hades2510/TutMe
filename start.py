@@ -42,7 +42,10 @@ def open_browser(url):
     chrome_driver_path = get_chrome_driver_location()
 	
     c_o = Options()
-    c_o.binary_path = get_cef_location()
+    if platform.system() == "Windows":
+        co_binary_path = get_cef_location()
+    else:
+        c_o.binary_location = get_cef_location()
         
     browser = webdriver.Chrome(executable_path=chrome_driver_path,chrome_options=c_o)
     browser.get(url)
@@ -51,8 +54,10 @@ def open_browser(url):
     elem = WebDriverWait( browser, 1000 ).until( EC.presence_of_element_located( (By.ID, "make_recipe")) )
     
     tut_config = json.load( open( os.path.join(basedir, elem.get_attribute("value") ) ) )
-    
-    run_tut(browser, tut_config["steps"], tut_config["metadata"], tut_config["input"])
+
+    inputs = tut_config.get("input",None)   
+ 
+    run_tut(browser, tut_config["steps"], tut_config["metadata"], inputs)
 	
 def run_tut(browser, steps, config, inputs=None):
     
