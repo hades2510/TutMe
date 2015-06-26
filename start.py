@@ -54,9 +54,9 @@ def open_browser(url):
     elem = WebDriverWait( browser, 1000 ).until( EC.presence_of_element_located( (By.ID, "make_recipe")) )
     inputs = None
     try:
-        inputs=browser.get_element_by_id("make_recipe_input").get_attribute("value")   
-    except:
-        pass
+        inputs=json.loads(browser.find_element_by_id("make_recipe_input").get_attribute("value"))   
+    except Exception as e:
+        print e
 
     tut_config = json.load( open( os.path.join(basedir, elem.get_attribute("value") ) ) )
  
