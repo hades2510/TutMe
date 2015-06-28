@@ -80,7 +80,6 @@ def open_browser(url):
     
     browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=c_o, service_args=service_args)
     browser.get(url)
-    inject_templates(browser)
     
     #wait for a recipe to be choosen
     elem = WebDriverWait( browser, 1000 ).until( EC.presence_of_element_located( (By.ID, "make_recipe")) )
@@ -100,18 +99,20 @@ def open_browser(url):
 def inject_css(browser):
     """Injects the content of res/inject.css in the browser window"""
     
+    print "injecting css"
+    
     with open("res/inject.css","r") as css_file:
         css_content = css_file.read()
    
     css_content=css_content.replace("\n","\\\n")
-    print css_content 
+    
     css_injection_script = """var css_to_inject="%s";
                             var head = document.getElementsByTagName("head")[0];
                             var style = document.createElement("link");
                             style.rel = "stylesheet";
                             style.innerHTML = css_to_inject;
                             head.appendChild(style);""" % css_content
-    print css_injection_script
+    
     browser.execute_script(css_injection_script)
 
 def inject_javascript(browser):
@@ -120,6 +121,7 @@ def inject_javascript(browser):
 def inject_templates(browser):
     """Inject css and javascript into the browser for highlighting"""
     
+    print "injecting templates"
     inject_css(browser)
     inject_javascript(browser)
     
@@ -161,6 +163,10 @@ def run_tut(browser, steps, config, inputs=None):
 
             input_data = data["value"]
             
+            if highlight_elem:
+                if step["data"]["locator"].startswith("#"):
+                    browser.execute_script("document.getElementById('%s').className='tut_me_injected_glowing_border';"%step["data"]["locator"][1:])
+         
             #maybe a var
             if input_data.startswith('$') :
                 print "interpolating variable ",input_data
@@ -176,6 +182,10 @@ def run_tut(browser, steps, config, inputs=None):
             data = step["data"]
             
             elem = find_elem(browser, data["locator"])
+            
+            if highlight_elem:
+                if step["data"]["locator"].startswith("#"):
+                    browser.execute_script("document.getElementById('%s').className='tut_me_injected_glowing_border';"%step["data"]["locator"][1:])
             
             print "pushing button ",data
 
