@@ -80,6 +80,7 @@ def open_browser(url):
     
     browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=c_o, service_args=service_args)
     browser.get(url)
+    inject_templates(browser)
     
     #wait for a recipe to be choosen
     elem = WebDriverWait( browser, 1000 ).until( EC.presence_of_element_located( (By.ID, "make_recipe")) )
@@ -95,6 +96,32 @@ def open_browser(url):
  
     #run a tutorial
     run_tut(browser, tut_config["steps"], tut_config["metadata"], inputs)
+
+def inject_css(browser):
+    """Injects the content of res/inject.css in the browser window"""
+    
+    with open("res/inject.css","r") as css_file:
+        css_content = css_file.read()
+   
+    css_content=css_content.replace("\n","\\\n")
+    print css_content 
+    css_injection_script = """var css_to_inject="%s";
+                            var head = document.getElementsByTagName("head")[0];
+                            var style = document.createElement("link");
+                            style.rel = "stylesheet";
+                            style.innerHTML = css_to_inject;
+                            head.appendChild(style);""" % css_content
+    print css_injection_script
+    browser.execute_script(css_injection_script)
+
+def inject_javascript(browser):
+    pass
+
+def inject_templates(browser):
+    """Inject css and javascript into the browser for highlighting"""
+    
+    inject_css(browser)
+    inject_javascript(browser)
     
 def run_tut(browser, steps, config, inputs=None):
     """ Runs a tutorial
@@ -108,7 +135,8 @@ def run_tut(browser, steps, config, inputs=None):
     """    
     
     wait_in_mili = config["default_wait"]
-    highlight_elem = config
+    highlight_elem = config["highlight_element"]
+    highlight_time = config["highlight_time"]
 
     for step in steps:
         
@@ -117,6 +145,11 @@ def run_tut(browser, steps, config, inputs=None):
             print "going to url ",step["data"]
             browser.get(step["data"])
             print "loaded url ",step["data"]
+
+            #inject custom css and javascript for
+            #highlighting elements
+            if highlight_elem:
+                inject_templates(browser)
 
         #if text_input step, find the element
         #and enter the input, variable interpolation may happen
