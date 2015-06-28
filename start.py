@@ -16,20 +16,25 @@ if getattr(sys, 'frozen', False):
     basedir = sys._MEIPASS
 else:
     basedir = '.'
-	
+    
 def get_cef_location():
-	if platform.system() == "Windows":
-		return os.path.join(basedir, "libs/win/cefsimple.exe")
-	else:
-		return os.path.join(basedir, os.path.join('libs','cefsimple.app/Contents/MacOS/cefsimple'))
-		
+    """ OS independent location of cef """
+    
+    if platform.system() == "Windows":
+        return os.path.join(basedir, "libs/win/cefsimple.exe")
+    else:
+        return os.path.join(basedir, os.path.join('libs','cefsimple.app/Contents/MacOS/cefsimple'))
+        
 def get_chrome_driver_location():
-	if platform.system() == "Windows":
-		return os.path.join(basedir, "libs/win/chromedriver")
-	else:
-		return os.path.join(basedir, os.path.join('libs','chromedriver'))
+    """ OS independent retrieval of chromedriver location """
+    
+    if platform.system() == "Windows":
+        return os.path.join(basedir, "libs/win/chromedriver")
+    else:
+        return os.path.join(basedir, os.path.join('libs','chromedriver'))
 
 def find_elem(browser, locator):
+    """ Tries to find an elemend in the browser based on locator"""    
     
     print "looking for elem ", locator
             
@@ -41,8 +46,10 @@ def find_elem(browser, locator):
     print "found elem ", locator
     
     return elem
+
     
 def get_null_file():
+    """ Returns a system dependent file path similar to POSIX /dev/null """
     
     if platform.system() == "Windows":
         return "NUL"
@@ -50,14 +57,25 @@ def get_null_file():
         return "/dev/null"
 
 def open_browser(url):
+    """Opens the cef instance and the provide url"""
+    
     chrome_driver_path = get_chrome_driver_location()
-	
+    
     c_o = Options()
     c_o.add_argument("--disable-web-security")
+
+    #redirect webdriver output to null, this doesn't block the pipe
+    #and stops a chromium freeze
     c_o.add_argument("--webdriver-logfile=%s" % get_null_file())
+    
+    #don't let chromium go to http://www.google.com, instead
+    #point it to the landing page
     c_o.add_argument("--url=%s" % url)
+
+    #custom browser location
     c_o.binary_location = get_cef_location()
 
+    #redirect logs to null file
     service_args = ["--log-path=%s" % get_null_file()]
     
     browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=c_o, service_args=service_args)
@@ -71,21 +89,37 @@ def open_browser(url):
     except Exception as e:
         print e
 
+    #load the recipe, this contains all the steps
+    #and other config params
     tut_config = json.load( open( os.path.join(basedir, elem.get_attribute("value") ) ) )
  
+    #run a tutorial
     run_tut(browser, tut_config["steps"], tut_config["metadata"], inputs)
-	
+    
 def run_tut(browser, steps, config, inputs=None):
+    """ Runs a tutorial
+    
+        Runs a given tutorial in the provided browser. The run consists
+        of running all the steps, interpolating the variables based on
+        the recipe and on the inputs proided.
+        
+        Configs related to delay between steps, highlighting elements and
+        other options are available.
+    """    
     
     wait_in_mili = config["default_wait"]
     highlight_elem = config
 
     for step in steps:
+        
+        #if url step point the browser to that url
         if step["type"] == "url":
             print "going to url ",step["data"]
             browser.get(step["data"])
             print "loaded url ",step["data"]
 
+        #if text_input step, find the element
+        #and enter the input, variable interpolation may happen
         if step["type"] == "text_input":
 
             data = step["data"]
@@ -103,6 +137,7 @@ def run_tut(browser, steps, config, inputs=None):
             
             elem.send_keys(input_data)
 
+        #button step, find the button and press it
         if step["type"] == "button_press":
             
             data = step["data"]
@@ -113,6 +148,9 @@ def run_tut(browser, steps, config, inputs=None):
 
             elem.click()
 
+        #wait between steps, this is usefull for the user
+        #comes from the config
         time.sleep(wait_in_mili/1000.0)
 
+#start the app :)
 open_browser("file://"+os.path.abspath(os.path.join(basedir,"configs/Recipes.html")))
