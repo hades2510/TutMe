@@ -1,4 +1,5 @@
 .tmigb { 
     border-width:2px !important;
+    border-style:solid !important;
     border-color:rgb(255,0,0) !important;
 }
