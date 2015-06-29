@@ -64,7 +64,7 @@ def open_browser(url):
     c_o.add_argument("--url=%s" % url)
 
     #custom browser location
-    #c_o.binary_location = get_cef_location()
+    c_o.binary_location = get_cef_location()
 
     #redirect logs to null file
     service_args = ["--log-path=%s" % os.devnull]
@@ -155,7 +155,7 @@ def run_tut(browser, steps, config, inputs=None):
             
             if highlight_elem:
                 if step["data"]["locator"].startswith("#"):
-                    browser.execute_script("document.getElementById('%s').setAttribute('class','tmigb');"%step["data"]["locator"][1:])
+                    browser.execute_script("document.getElementById('%s').classList.add('tmigb');"%step["data"]["locator"][1:])
                     time.sleep( highlight_time/1000.0 )
          
             #maybe a var
@@ -180,7 +180,7 @@ def run_tut(browser, steps, config, inputs=None):
             
             print "pushing button ",data
 
-            #elem.click()
+            elem.click()
 
         #wait between steps, this is usefull for the user
         #comes from the config
