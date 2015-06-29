@@ -12,6 +12,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 
+sys.stdout = open("C://Workspace/TutMe/out.txt","w")
+sys.stderr = open("C://Workspace/TutMe/err.txt","w")
+
 if getattr(sys, 'frozen', False):
     basedir = sys._MEIPASS
 else:
@@ -47,15 +50,6 @@ def find_elem(browser, locator):
     
     return elem
 
-    
-def get_null_file():
-    """ Returns a system dependent file path similar to POSIX /dev/null """
-    
-    if platform.system() == "Windows":
-        return "NUL"
-    else:
-        return "/dev/null"
-
 def open_browser(url):
     """Opens the cef instance and the provide url"""
     
@@ -66,7 +60,7 @@ def open_browser(url):
 
     #redirect webdriver output to null, this doesn't block the pipe
     #and stops a chromium freeze
-    c_o.add_argument("--webdriver-logfile=%s" % get_null_file())
+    c_o.add_argument("--webdriver-logfile=%s" % os.devnull)
     
     #don't let chromium go to http://www.google.com, instead
     #point it to the landing page
@@ -76,7 +70,7 @@ def open_browser(url):
     c_o.binary_location = get_cef_location()
 
     #redirect logs to null file
-    service_args = ["--log-path=%s" % get_null_file()]
+    service_args = ["--log-path=%s" % os.devnull]
     
     browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=c_o, service_args=service_args)
     browser.get(url)
