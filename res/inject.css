@@ -1,1 +1,4 @@
-tut_me_injected_glowing_border{border-width:5px;border-color:rgb(255,0,0);}
+tmigb { 
+    border-width:50px !important;
+    border-color:rgb(255,0,0) !important;
+}
