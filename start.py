@@ -12,9 +12,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 
-sys.stdout = open("C://Workspace/TutMe/out.txt","w")
-sys.stderr = open("C://Workspace/TutMe/err.txt","w")
-
 if getattr(sys, 'frozen', False):
     basedir = sys._MEIPASS
 else:
@@ -67,7 +64,7 @@ def open_browser(url):
     c_o.add_argument("--url=%s" % url)
 
     #custom browser location
-    c_o.binary_location = get_cef_location()
+    #c_o.binary_location = get_cef_location()
 
     #redirect logs to null file
     service_args = ["--log-path=%s" % os.devnull]
@@ -98,14 +95,13 @@ def inject_css(browser):
     with open( os.path.join( basedir, "res/inject.css"), "r") as css_file:
         css_content = css_file.read()
    
-    css_content=css_content.replace("\n","\\\n")
+    css_content = css_content.replace("\n","\\\n")
     
     css_injection_script = """var css_to_inject="%s";
-                            var head = document.getElementsByTagName("head")[0];
-                            var style = document.createElement("link");
-                            style.rel = "stylesheet";
-                            style.innerHTML = css_to_inject;
-                            head.appendChild(style);""" % css_content
+                            var style = document.createElement("style");
+                            style.appendChild( document.createTextNode( css_to_inject ) );
+                            style.type = "text/css";
+                            document.head.appendChild(style);""" % css_content
     
     browser.execute_script(css_injection_script)
 
@@ -159,7 +155,8 @@ def run_tut(browser, steps, config, inputs=None):
             
             if highlight_elem:
                 if step["data"]["locator"].startswith("#"):
-                    browser.execute_script("document.getElementById('%s').className='tut_me_injected_glowing_border';"%step["data"]["locator"][1:])
+                    browser.execute_script("document.getElementById('%s').setAttribute('class','tmigb');"%step["data"]["locator"][1:])
+                    time.sleep( highlight_time/1000.0 )
          
             #maybe a var
             if input_data.startswith('$') :
@@ -183,7 +180,7 @@ def run_tut(browser, steps, config, inputs=None):
             
             print "pushing button ",data
 
-            elem.click()
+            #elem.click()
 
         #wait between steps, this is usefull for the user
         #comes from the config
