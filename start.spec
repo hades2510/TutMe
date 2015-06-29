@@ -1,24 +1,25 @@
 # -*- mode: python -*-
 a = Analysis(['start.py'],
-             pathex=['/Users/macpro/Documents/tut'],
+             pathex=['C:\\Workspace\\TutMe'],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)
-#cef_simple_app=Tree('./cefsimple.app', 'cefsimple.app')
-libs_path=Tree('./libs', 'libs')
-configs_path=Tree('./configs','configs')
+             
+libs_path = Tree('./libs', 'libs')
+configs_path = Tree('./configs','configs')
+res_path = Tree('./res','res')
 
 pyz = PYZ(a.pure)
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
-	  #cef_simple_app,
-          libs_path,
-		  configs_path,
           a.zipfiles,
           a.datas,
-          name='start',
+          libs_path,
+		  configs_path,
+          res_path,
+          name='start.exe',
           debug=False,
           strip=None,
-          upx=True,
+          upx=False,
           console=False )
