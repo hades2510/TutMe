@@ -101,7 +101,7 @@ def inject_css(browser):
     
     print "injecting css"
     
-    with open("res/inject.css","r") as css_file:
+    with open( os.path.join( basedir, "res/inject.css"), "r") as css_file:
         css_content = css_file.read()
    
     css_content=css_content.replace("\n","\\\n")
