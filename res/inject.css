@@ -1,5 +1,12 @@
+@-webkit-keyframes tmigb_animation
+{
+    0% { border-width:0px; }
+    50% { border-width: 3px; }
+    100% { border-width:0px; }
+}
 .tmigb { 
-    border-width:2px !important;
+    -webkit-animation: tmigb_animation 1s 2;
+    position:relative !important;
     border-style:solid !important;
     border-color:rgb(255,0,0) !important;
 }
