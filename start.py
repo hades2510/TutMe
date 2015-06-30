@@ -115,6 +115,18 @@ def inject_templates(browser):
     inject_css(browser)
     inject_javascript(browser)
     
+def highlight_element( browser, locator, highlight_time ):
+    if locator.startswith("#"):
+        browser.execute_script("document.getElementById('%s').classList.add('tmigb');"%locator[1:])
+        time.sleep( 2 )
+        browser.execute_script("document.getElementById('%s').classList.remove('tmigb');"%locator[1:])
+        time.sleep( highlight_time/1000.0 )
+    elif locator.startswith("."):
+        browser.execute_script("document.getElementsByClassName('%s')[0].classList.add('tmigb');"%locator[1:])
+        time.sleep( 2 )
+        browser.execute_script("document.getElementsByClassName('%s')[0].classList.remove('tmigb');"%locator[1:])
+        time.sleep( highlight_time/1000.0 )
+    
 def run_tut(browser, steps, config, inputs=None):
     """ Runs a tutorial
     
@@ -154,9 +166,7 @@ def run_tut(browser, steps, config, inputs=None):
             input_data = data["value"]
             
             if highlight_elem:
-                if step["data"]["locator"].startswith("#"):
-                    browser.execute_script("document.getElementById('%s').classList.add('tmigb');"%step["data"]["locator"][1:])
-                    time.sleep( highlight_time/1000.0 )
+                highlight_element( browser, data["locator"], highlight_time )
          
             #maybe a var
             if input_data.startswith('$') :
@@ -175,8 +185,7 @@ def run_tut(browser, steps, config, inputs=None):
             elem = find_elem(browser, data["locator"])
             
             if highlight_elem:
-                if step["data"]["locator"].startswith("#"):
-                    browser.execute_script("document.getElementById('%s').className='tut_me_injected_glowing_border';"%step["data"]["locator"][1:])
+                highlight_element( browser, data["locator"], highlight_time )
             
             print "pushing button ",data
 
