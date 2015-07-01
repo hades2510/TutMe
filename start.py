@@ -141,17 +141,11 @@ class TutApp:
         self.inject_javascript()
     
     def highlight_element( self, locator, highlight_time ):
-        if locator.startswith("#"):
-            self.browser.execute_script("document.getElementById('%s').classList.add('tmigb');"%locator[1:])
-            time.sleep( 2 )
-            self.browser.execute_script("document.getElementById('%s').classList.remove('tmigb');"%locator[1:])
-            time.sleep( highlight_time/1000.0 )
-        elif locator.startswith("."):
-            self.browser.execute_script("document.getElementsByClassName('%s')[0].classList.add('tmigb');"%locator[1:])
-            time.sleep( 2 )
-            self.browser.execute_script("document.getElementsByClassName('%s')[0].classList.remove('tmigb');"%locator[1:])
-            time.sleep( highlight_time/1000.0 )
-    
+        self.browser.execute_script("$('%s').addClass('tmigb');"%locator)
+        time.sleep( 2 )
+        self.browser.execute_script("$('%s').removeClass('tmigb');"%locator)
+        time.sleep( highlight_time/1000.0 )
+        
     def run_tut(self, steps, config, inputs=None):
         """ Runs a tutorial
         
