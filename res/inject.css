@@ -14,9 +14,9 @@
 }
 .tmigb { 
     -webkit-animation: tmigb_animation_border 1s 2;
-    position:fixed;
-    border-style:solid;
-    border-color:rgb(255,0,0);
-    border-radius:8px;
-    z-index:500000000;
+    position:absolute !important;
+    border-style:solid !important;
+    border-color:rgb(255,0,0) !important;
+    border-radius:8px !important;
+    z-index:5000000000 !important;
 }
