@@ -124,8 +124,15 @@ class TutApp:
         self.browser.execute_script(css_injection_script)
 
     def inject_javascript(self):
-        pass
-
+        """Injects the content of res/inject.js in the browser window"""
+        
+        print "injecting js"
+        
+        with open( os.path.join(basedir, "res/inject.js") ) as js_file:
+            js_content = js_file.read()
+            
+        self.browser.execute_script(js_content)
+        
     def inject_templates(self):
         """Inject css and javascript into the browser for highlighting"""
         
