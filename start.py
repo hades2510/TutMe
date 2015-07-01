@@ -141,10 +141,8 @@ class TutApp:
         self.inject_javascript()
     
     def highlight_element( self, locator, highlight_time ):
-        self.browser.execute_script("$('%s').addClass('tmigb');"%locator)
-        time.sleep( 2 )
-        self.browser.execute_script("$('%s').removeClass('tmigb');"%locator)
-        time.sleep( highlight_time/1000.0 )
+        self.browser.execute_script("TutMe.highlightElem('%s',%s);"%(locator, highlight_time))
+        WebDriverWait(self.browser, 10).until( EC.presence_of_element_located( (By.ID, locator) ) )
         
     def run_tut(self, steps, config, inputs=None):
         """ Runs a tutorial

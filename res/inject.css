@@ -6,7 +6,8 @@
 }
 .tmigb { 
     -webkit-animation: tmigb_animation 1s 2;
-    position:relative !important;
+    position:fixed !important;
     border-style:solid !important;
     border-color:rgb(255,0,0) !important;
+    z-index:5000000;
 }
