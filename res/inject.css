@@ -1,13 +1,22 @@
-@-webkit-keyframes tmigb_animation
+@-webkit-keyframes tmigb_animation_border
 {
-    0% { border-width:0px; }
-    50% { border-width: 3px; }
-    100% { border-width:0px; }
+    0%,100% 
+    { 
+        border-width:0px;
+        -webkit-opacity:0; 
+    }
+    50% 
+    { 
+        border-width: 4px;
+        -webkit-opacity:1;
+        -webkit-transform: translate(-2px,-2px); 
+    }
 }
 .tmigb { 
-    -webkit-animation: tmigb_animation 1s 2;
-    position:fixed !important;
-    border-style:solid !important;
-    border-color:rgb(255,0,0) !important;
-    z-index:5000000;
+    -webkit-animation: tmigb_animation_border 1s 2;
+    position:fixed;
+    border-style:solid;
+    border-color:rgb(255,0,0);
+    border-radius:8px;
+    z-index:500000000;
 }

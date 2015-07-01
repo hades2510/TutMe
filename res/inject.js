@@ -25,6 +25,8 @@ window.TutMe.highlightElem = function(locator, time_to_wait)
     var height = elem.outerHeight()-2;
     var width = elem.outerWidth()-2;
     
+    //position the border element over
+    //the real element    
     var border = $("<div></div>");
     border.attr({class:"tmigb"});
     border.css({top:y, left:x, width:width, height:height});
@@ -35,8 +37,12 @@ window.TutMe.highlightElem = function(locator, time_to_wait)
     setTimeout(function(){
         $(locator).first().removeClass('tmigb');
         setTimeout(function(){
+            //signal selenium that the highlighting is done
             var hidden_input = $('<input type="hidden" value="'+locator+'" id="'+locator+'"></input>');
             $('body').append(hidden_input);
+
+            //remove the highlight
+            border.remove();
         }, time_to_wait);
     }, 2000)
 }
